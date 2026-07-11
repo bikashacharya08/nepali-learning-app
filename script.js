@@ -1,15 +1,12 @@
 /**
  * Sajilo Nepali - Learning Application Script
- * Integrated version for 100 vocabulary words database.
  */
 
 // ==========================================================================
 // 1. APPLICATION DATA LINKING
 // ==========================================================================
-// Fallback array protects app execution context if file load latency occurs
-const vocabularyData = window.vocabularyList || [
-    { nepali: "Namaste", english: "Hello / Greetings", category: "Essentials & Greetings" }
-];
+// This safely grabs the 100 words from vocabulary.js
+const vocabularyData = window.vocabularyList;
 
 // ==========================================================================
 // 2. STATE MANAGEMENT
@@ -81,16 +78,17 @@ navQuiz.addEventListener('click', () => switchView('quiz'));
 // 5. FLASHCARDS FUNCTIONALITY
 // ==========================================================================
 function updateFlashcardUI() {
-    flashcardElement.classList.remove('flipped');
+    if (!vocabularyData || vocabularyData.length === 0) return;
     
+    flashcardElement.classList.remove('flipped');
     const currentItem = vocabularyData[currentCardIndex];
     
-    // CHANGE THIS: Make the Romanized word the big text, and remove the "NP" text placeholder
+    // Put the Romanized word where the big text goes, and the category below it
     if (cardNepaliScript) cardNepaliScript.textContent = currentItem.nepali; 
-    cardNepaliRoman.textContent = `Category: ${currentItem.category}`; 
-    cardEnglish.textContent = currentItem.english;
+    if (cardNepaliRoman) cardNepaliRoman.textContent = `Category: ${currentItem.category}`; 
+    if (cardEnglish) cardEnglish.textContent = currentItem.english;
     
-    cardProgress.textContent = `${currentCardIndex + 1} / ${vocabularyData.length}`;
+    if (cardProgress) cardProgress.textContent = `${currentCardIndex + 1} / ${vocabularyData.length}`;
 }
 
 flashcardElement.addEventListener('click', () => {
@@ -124,15 +122,15 @@ function resetQuizSession() {
 }
 
 function setupQuizQuestion() {
+    if (!vocabularyData || vocabularyData.length === 0) return;
+
     hasAnsweredQuiz = false;
     nextQuizBtn.classList.add('hidden');
     quizFeedback.classList.add('hidden');
     
     const currentQuestion = vocabularyData[currentQuizIndex];
-    
-    // CHANGE THIS: Remove the "❓" placeholder text and show the word clearly
     if (quizNepaliScript) quizNepaliScript.textContent = currentQuestion.nepali;
-    quizNepaliRoman.textContent = `Category: ${currentQuestion.category}`; 
+    if (quizNepaliRoman) quizNepaliRoman.textContent = `Category: ${currentQuestion.category}`; 
     
     let options = [currentQuestion.english];
     
@@ -144,20 +142,6 @@ function setupQuizQuestion() {
     for (let i = 0; i < 3; i++) {
         if (distractors[i]) options.push(distractors[i]);
     }
-    
-    shuffleArray(options);
-    
-    quizOptionsGrid.innerHTML = '';
-    options.forEach(optionText => {
-        const button = document.createElement('button');
-        button.className = 'option-btn';
-        button.textContent = optionText;
-        button.addEventListener('click', () => handleAnswerSelection(button, optionText, currentQuestion.english));
-        quizOptionsGrid.appendChild(button);
-    });
-    
-    quizProgress.textContent = `Question ${currentQuizIndex + 1} of ${vocabularyData.length}`;
-}
     
     shuffleArray(options);
     
@@ -228,6 +212,7 @@ function shuffleArray(array) {
     }
 }
 
+// Start the app smoothly once everything loads
 document.addEventListener('DOMContentLoaded', () => {
     updateFlashcardUI();
 });
