@@ -85,9 +85,9 @@ function updateFlashcardUI() {
     
     const currentItem = vocabularyData[currentCardIndex];
     
-    // Aligned to display flags/indicators where script tags are present
-    if (cardNepaliScript) cardNepaliScript.textContent = "🇳🇵";
-    cardNepaliRoman.textContent = currentItem.nepali; 
+    // CHANGE THIS: Make the Romanized word the big text, and remove the "NP" text placeholder
+    if (cardNepaliScript) cardNepaliScript.textContent = currentItem.nepali; 
+    cardNepaliRoman.textContent = `Category: ${currentItem.category}`; 
     cardEnglish.textContent = currentItem.english;
     
     cardProgress.textContent = `${currentCardIndex + 1} / ${vocabularyData.length}`;
