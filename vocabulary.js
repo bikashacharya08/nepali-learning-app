@@ -1,0 +1,129 @@
+/**
+ * Sajilo Nepali - 100 Core Vocabulary & Phrases Database
+ * Categorized explicitly for English speakers, travelers, and trekkers.
+ */
+
+const vocabularyList = [
+    // ==========================================================================
+    // 1. Essentials & Greetings (20 Items)
+    // ==========================================================================
+    { nepali: "Namaste", english: "Hello / Greetings", category: "Essentials & Greetings" },
+    { nepali: "Dhanyabaad", english: "Thank you", category: "Essentials & Greetings" },
+    { nepali: "Sanchai hunuchha?", english: "How are you?", category: "Essentials & Greetings" },
+    { nepali: "Ma sanchai chhu", english: "I am fine", category: "Essentials & Greetings" },
+    { nepali: "Hajur", english: "Yes (polite) / Excuse me?", category: "Essentials & Greetings" },
+    { nepali: "Hoina", english: "No", category: "Essentials & Greetings" },
+    { nepali: "Kripaya", english: "Please", category: "Essentials & Greetings" },
+    { nepali: "Maaf garnuhos", english: "I am sorry / Excuse me", category: "Essentials & Greetings" },
+    { nepali: "Pheri bhetaula", english: "See you again", category: "Essentials & Greetings" },
+    { nepali: "Tapaiko naam ke ho?", english: "What is your name?", category: "Essentials & Greetings" },
+    { nepali: "Mero naam... ho", english: "My name is...", category: "Essentials & Greetings" },
+    { nepali: "Tapaillai bhetero khushi laagyo", english: "Nice to meet you", category: "Essentials & Greetings" },
+    { nepali: "Angreji bolnuhunuchha?", english: "Do you speak English?", category: "Essentials & Greetings" },
+    { nepali: "Maile bujhina", english: "I didn't understand", category: "Essentials & Greetings" },
+    { nepali: "Pheri bhannuhos", english: "Please say it again", category: "Essentials & Greetings" },
+    { nepali: "Bistarai bhannuhos", english: "Please speak slowly", category: "Essentials & Greetings" },
+    { nepali: "Thik chha", english: "It's okay / All right", category: "Essentials & Greetings" },
+    { nepali: "Subha prabhat", english: "Good morning", category: "Essentials & Greetings" },
+    { nepali: "Subha raatri", english: "Good night", category: "Essentials & Greetings" },
+    { nepali: "Ghar kahaa ho?", english: "Where is your home?", category: "Essentials & Greetings" },
+
+    // ==========================================================================
+    // 2. Trekking & Directions (20 Items)
+    // ==========================================================================
+    { nepali: "Bato kahaa chha?", english: "Where is the trail/way?", category: "Trekking & Directions" },
+    { nepali: "Yo bato kahaa jaanchha?", english: "Where does this trail go?", category: "Trekking & Directions" },
+    { nepali: "Ukalo", english: "Uphill", category: "Trekking & Directions" },
+    { nepali: "Oralo", english: "Downhill", category: "Trekking & Directions" },
+    { nepali: "Bato ukalo chha?", english: "Is the trail steep uphill?", category: "Trekking & Directions" },
+    { nepali: "Gau kati door chha?", english: "How far is the village?", category: "Trekking & Directions" },
+    { nepali: "Lodging thau kahaa chha?", english: "Where is a place to lodge?", category: "Trekking & Directions" },
+    { nepali: "Hami thakyaung", english: "We are tired", category: "Trekking & Directions" },
+    { nepali: "Bistarai hindaung", english: "Let's walk slowly", category: "Trekking & Directions" },
+    { nepali: "Himal ramro chha", english: "The mountain is beautiful", category: "Trekking & Directions" },
+    { nepali: "Aaja mausam kasto chha?", english: "How is the weather today?", category: "Trekking & Directions" },
+    { nepali: "Paani parchha?", english: "Will it rain?", category: "Trekking & Directions" },
+    { nepali: "Dayaa", english: "Right (Direction)", category: "Trekking & Directions" },
+    { nepali: "Bayaa", english: "Left (Direction)", category: "Trekking & Directions" },
+    { nepali: "Sidha", english: "Straight", category: "Trekking & Directions" },
+    { nepali: "Tadha", english: "Far", category: "Trekking & Directions" },
+    { nepali: "Najik", english: "Near / Close", category: "Trekking & Directions" },
+    { nepali: "Naksa chha?", english: "Do you have a map?", category: "Trekking & Directions" },
+    { nepali: "Phedi", english: "Base of the mountain", category: "Trekking & Directions" },
+    { nepali: "Bhanjyang", english: "Mountain Pass", category: "Trekking & Directions" },
+
+    // ==========================================================================
+    // 3. Dining & Food (20 Items)
+    // ==========================================================================
+    { nepali: "Khaanaa khane thau kahaa chha?", english: "Where is a place to eat?", category: "Dining & Food" },
+    { nepali: "Malaai bhok laagyo", english: "I am hungry", category: "Dining & Food" },
+    { nepali: "Malaai tirkha laagyo", english: "I am thirsty", category: "Dining & Food" },
+    { nepali: "Paani", english: "Water", category: "Dining & Food" },
+    { nepali: "Umaaleko paani", english: "Boiled water", category: "Dining & Food" },
+    { nepali: "Khaanaa mitho chha", english: "The food is delicious", category: "Dining & Food" },
+    { nepali: "Dherai piro nagarnuhos", english: "Please do not make it too spicy", category: "Dining & Food" },
+    { nepali: "Dal Bhat pakauna kati lagchha?", english: "How long to cook Dal Bhat?", category: "Dining & Food" },
+    { nepali: "Thapnuhaos", english: "Please give me a second helping/more", category: "Dining & Food" },
+    { nepali: "Pugyo", english: "It is enough / I am full", category: "Dining & Food" },
+    { nepali: "Chiyaa", english: "Tea", category: "Dining & Food" },
+    { nepali: "Kukhuraako maasu", english: "Chicken meat", category: "Dining & Food" },
+    { nepali: "Tarkaari", english: "Vegetables", category: "Dining & Food" },
+    { nepali: "Achar", english: "Pickle / Relish", category: "Dining & Food" },
+    { nepali: "Chini chainna", english: "I do not want sugar", category: "Dining & Food" },
+    { nepali: "Bill paung", english: "Can I have the bill please?", category: "Dining & Food" },
+    { nepali: "Sabji matrai", english: "Vegetarian only", category: "Dining & Food" },
+    { nepali: "Phalphool", english: "Fruits", category: "Dining & Food" },
+    { nepali: "Dahi", english: "Yogurt / Curd", category: "Dining & Food" },
+    { nepali: "Bihanikhaanaa", english: "Breakfast", category: "Dining & Food" },
+
+    // ==========================================================================
+    // 4. Shopping & Numbers (20 Items)
+    // ==========================================================================
+    { nepali: "Yasako kati ho?", english: "How much is this?", category: "Shopping & Numbers" },
+    { nepali: "Dherai mahango bhayo", english: "It became too expensive", category: "Shopping & Numbers" },
+    { nepali: "Alikati milauhos na", english: "Please discount it a little bit", category: "Shopping & Numbers" },
+    { nepali: "Malaai yo man paryo", english: "I like this", category: "Shopping & Numbers" },
+    { nepali: "Arko dekhauhos", english: "Show me another one", category: "Shopping & Numbers" },
+    { nepali: "Paisa", english: "Money", category: "Shopping & Numbers" },
+    { nepali: "Ek", english: "One (1)", category: "Shopping & Numbers" },
+    { nepali: "Dui", english: "Two (2)", category: "Shopping & Numbers" },
+    { nepali: "Teen", english: "Three (3)", category: "Shopping & Numbers" },
+    { nepali: "Chaar", english: "Four (4)", category: "Shopping & Numbers" },
+    { nepali: "Paanch", english: "Five (5)", category: "Shopping & Numbers" },
+    { nepali: "Chha", english: "Six (6)", category: "Shopping & Numbers" },
+    { nepali: "Saat", english: "Seven (7)", category: "Shopping & Numbers" },
+    { nepali: "Aath", english: "Eight (8)", category: "Shopping & Numbers" },
+    { nepali: "Nau", english: "Nine (9)", category: "Shopping & Numbers" },
+    { nepali: "Das", english: "Ten (10)", category: "Shopping & Numbers" },
+    { nepali: "Kapaadaa", english: "Clothing", category: "Shopping & Numbers" },
+    { nepali: "Jholaa", english: "Bag", category: "Shopping & Numbers" },
+    { nepali: "Pasal", english: "Shop / Store", category: "Shopping & Numbers" },
+    { nepali: "Khulla paisa chha?", english: "Do you have small change?", category: "Shopping & Numbers" },
+
+    // ==========================================================================
+    // 5. Emergency & Safety (20 Items)
+    // ==========================================================================
+    { nepali: "Guhaar!", english: "Help!", category: "Emergency & Safety" },
+    { nepali: "Malaai sahayog chahiyo", english: "I need help", category: "Emergency & Safety" },
+    { nepali: "Ma birami chhu", english: "I am sick", category: "Emergency & Safety" },
+    { nepali: "Aspatal kahaa chha?", english: "Where is the hospital?", category: "Emergency & Safety" },
+    { nepali: "Doctor bolaunuhos", english: "Please call a doctor", category: "Emergency & Safety" },
+    { nepali: "Mero टाउको (tauko) dukhirachha", english: "My head is hurting", category: "Emergency & Safety" },
+    { nepali: "Mero pet dukhyo", english: "My stomach hurts", category: "Emergency & Safety" },
+    { nepali: "Malaai ringataa laagyo", english: "I feel dizzy", category: "Emergency & Safety" },
+    { nepali: "Aushadhi pasal kahaa chha?", english: "Where is the pharmacy?", category: "Emergency & Safety" },
+    { nepali: "Malaai saas pherna gaaro bhayo", english: "I am having trouble breathing", category: "Emergency & Safety" },
+    { nepali: "Prahari chauki kahaa chha?", english: "Where is the police station?", category: "Emergency & Safety" },
+    { nepali: "Mero saamaan harayo", english: "My luggage/belongings are lost", category: "Emergency & Safety" },
+    { nepali: "Ma haraye", english: "I am lost", category: "Emergency & Safety" },
+    { nepali: "Yo सुरक्षित (surakshit) chha?", english: "Is this safe?", category: "Emergency & Safety" },
+    { nepali: "Teta najanus", english: "Don't go there", category: "Emergency & Safety" },
+    { nepali: "Chitto garnuhos", english: "Hurry up / Do it quickly", category: "Emergency & Safety" },
+    { nepali: "Malaai aushadhi chahiyo", english: "I need medicine", category: "Emergency & Safety" },
+    { nepali: "Ma lade", english: "I fell down", category: "Emergency & Safety" },
+    { nepali: "Sahayogako laagi dhanyabaad", english: "Thank you for the help", category: "Emergency & Safety" },
+    { nepali: "Prahari bolauhos", english: "Call the police", category: "Emergency & Safety" }
+];
+
+// Attach globally to window object for access across decoupled script modules
+window.vocabularyList = vocabularyList;
