@@ -129,8 +129,10 @@ function setupQuizQuestion() {
     quizFeedback.classList.add('hidden');
     
     const currentQuestion = vocabularyData[currentQuizIndex];
-    if (quizNepaliScript) quizNepaliScript.textContent = "❓";
-    quizNepaliRoman.textContent = currentQuestion.nepali; 
+    
+    // CHANGE THIS: Remove the "❓" placeholder text and show the word clearly
+    if (quizNepaliScript) quizNepaliScript.textContent = currentQuestion.nepali;
+    quizNepaliRoman.textContent = `Category: ${currentQuestion.category}`; 
     
     let options = [currentQuestion.english];
     
@@ -142,6 +144,20 @@ function setupQuizQuestion() {
     for (let i = 0; i < 3; i++) {
         if (distractors[i]) options.push(distractors[i]);
     }
+    
+    shuffleArray(options);
+    
+    quizOptionsGrid.innerHTML = '';
+    options.forEach(optionText => {
+        const button = document.createElement('button');
+        button.className = 'option-btn';
+        button.textContent = optionText;
+        button.addEventListener('click', () => handleAnswerSelection(button, optionText, currentQuestion.english));
+        quizOptionsGrid.appendChild(button);
+    });
+    
+    quizProgress.textContent = `Question ${currentQuizIndex + 1} of ${vocabularyData.length}`;
+}
     
     shuffleArray(options);
     
