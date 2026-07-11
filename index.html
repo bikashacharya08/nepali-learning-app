@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sajilo Nepali - Learn Nepali Easily</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="app-header">
+        <div class="header-container">
+            <h1>Sajilo Nepali</h1>
+            <p class="tagline">Your simple path to learning Nepali</p>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="app-nav">
+        <ul>
+            <li>
+                <button id="nav-flashcards" class="nav-btn active" aria-controls="flashcards-section" aria-selected="true">
+                    Vocabulary Flashcards
+                </button>
+            </li>
+            <li>
+                <button id="nav-quiz" class="nav-btn" aria-controls="quiz-section" aria-selected="false">
+                    Quick Quiz
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="app-content">
+        
+        <!-- Vocabulary Flashcards Section -->
+        <section id="flashcards-section" class="content-section" aria-hidden="false">
+            <h2 class="section-title">Vocabulary Flashcards</h2>
+            <p class="section-desc">Tap the card to flip between the Nepali word and its English translation.</p>
+            
+            <div class="flashcard-container">
+                <div class="flashcard" id="flashcard" role="button" tabindex="0" aria-label="Vocabulary card. Press Space or Enter to flip.">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <span class="script-text" id="card-nepali-script">नमस्ते</span>
+                            <span class="romanized-text" id="card-nepali-roman">Namaste</span>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="english-text" id="card-english">Hello / I bow to the divine in you</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="prev-card-btn" class="btn secondary-btn">Previous</button>
+                <span id="card-progress" class="progress-text">1 / 5</span>
+                <button id="next-card-btn" class="btn primary-btn">Next</button>
+            </div>
+        </section>
+
+        <!-- Quick Quiz Section -->
+        <section id="quiz-section" class="content-section hidden" aria-hidden="true">
+            <h2 class="section-title">Quick Quiz</h2>
+            <p class="section-desc">Test your knowledge! Choose the correct English translation.</p>
+
+            <div class="quiz-container">
+                <div class="quiz-question-box">
+                    <span class="script-text" id="quiz-nepali-script">धन्यवाद</span>
+                    <span class="romanized-text" id="quiz-nepali-roman">Dhanyabaad</span>
+                </div>
+
+                <div id="quiz-options" class="quiz-options-grid">
+                    <!-- Options will be dynamically injected via script.js -->
+                    <button class="option-btn">Option 1</button>
+                    <button class="option-btn">Option 2</button>
+                    <button class="option-btn">Option 3</button>
+                    <button class="option-btn">Option 4</button>
+                </div>
+
+                <div id="quiz-feedback" class="quiz-feedback hidden">
+                    <p id="feedback-text"></p>
+                </div>
+            </div>
+
+            <div class="controls">
+                <span id="quiz-progress" class="progress-text">Question 1 of 5</span>
+                <button id="next-quiz-btn" class="btn primary-btn hidden">Next Question</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="app-footer">
+        <div class="footer-container">
+            <p>&copy; 2026 Sajilo Nepali. Making language learning accessible.</p>
+        </div>
+    </footer>
+
+    <!-- External JavaScript Link -->
+    <script src="script.js"></script>
+</body>
+</html>

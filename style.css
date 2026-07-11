@@ -1,0 +1,388 @@
+/* ==========================================================================
+   1. VARIABLES & BASE SETUP (Quiet Luxury Palette)
+   ========================================================================== */
+:root {
+    /* Color Palette */
+    --bg-primary: #FAF9F6;      /* Soft Alabaster / Off-white */
+    --bg-surface: #FFFFFF;      /* Pure White for cards/containers */
+    --text-main: #2C3539;       /* Deep Slate Gray */
+    --text-muted: #65737E;      /* Muted Pebble Gray */
+    --accent-sand: #E6DFD3;     /* Warm Sand Accent */
+    --accent-sand-dark: #D4C9B7;/* Hover Sand */
+    --success-green: #4A5D4E;   /* Muted Forest Green */
+    --error-rose: #A37A7A;      /* Earthy Rose/Terracotta for errors */
+    
+    /* Typography & Structure */
+    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    --max-width: 760px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   2. HEADER & NAVIGATION
+   ========================================================================== */
+.app-header {
+    background-color: var(--bg-surface);
+    padding: 3rem 1.5rem 1.5rem 1.5rem;
+    text-align: center;
+}
+
+.header-container h1 {
+    font-weight: 400;
+    font-size: 2.25rem;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+}
+
+.tagline {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    font-weight: 300;
+}
+
+.app-nav {
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    display: flex;
+    justify-content: center;
+    padding-bottom: 1rem;
+}
+
+.app-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    padding: 0.5rem 0;
+    cursor: pointer;
+    position: relative;
+    transition: var(--transition-smooth);
+}
+
+.nav-btn:hover {
+    color: var(--text-main);
+}
+
+.nav-btn.active {
+    color: var(--text-main);
+}
+
+/* Elegant minimalist underline indicator */
+.nav-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--text-main);
+    transform: scaleX(0);
+    transition: var(--transition-smooth);
+}
+
+.nav-btn.active::after {
+    transform: scaleX(1);
+}
+
+/* ==========================================================================
+   3. LAYOUT & CORE SECTIONS
+   ========================================================================== */
+.app-content {
+    flex: 1;
+    max-width: var(--max-width);
+    width: 100%;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+}
+
+.content-section {
+    animation: fadeIn 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.content-section.hidden {
+    display: none !important;
+}
+
+.section-title {
+    font-weight: 400;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+}
+
+.section-desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 3rem;
+    font-weight: 300;
+}
+
+/* ==========================================================================
+   4. COMPONENT: FLASHCARDS (3D Flip Effect)
+   ========================================================================== */
+.flashcard-container {
+    perspective: 1000px;
+    margin-bottom: 3rem;
+}
+
+.flashcard {
+    width: 100%;
+    height: 320px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+.flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+/* Dynamic JS toggle class */
+.flashcard.flipped .flashcard-inner {
+    transform: rotateY(180deg);
+}
+
+.flashcard-front, .flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.flashcard-back {
+    transform: rotateY(180deg);
+}
+
+/* Typography Inside Components */
+.script-text {
+    font-size: 3.5rem;
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+    color: var(--text-main);
+}
+
+.romanized-text {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+}
+
+.english-text {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text-main);
+    max-width: 80%;
+}
+
+/* ==========================================================================
+   5. COMPONENT: QUIZ INTERFACE
+   ========================================================================== */
+.quiz-container {
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-md);
+    padding: 3rem 2.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    margin-bottom: 3rem;
+}
+
+.quiz-question-box {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.quiz-options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.option-btn {
+    background-color: var(--bg-primary);
+    border: 1px solid transparent;
+    color: var(--text-main);
+    padding: 1.25rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: left;
+    transition: var(--transition-smooth);
+}
+
+.option-btn:hover {
+    background-color: var(--accent-sand);
+}
+
+/* Quiz Answer States */
+.option-btn.correct {
+    background-color: var(--success-green) !important;
+    color: #FFFFFF;
+}
+
+.option-btn.incorrect {
+    background-color: var(--error-rose) !important;
+    color: #FFFFFF;
+}
+
+.quiz-feedback {
+    margin-top: 2rem;
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    text-align: center;
+    font-size: 0.95rem;
+    animation: fadeIn 0.4s ease;
+}
+
+.quiz-feedback.hidden {
+    display: none;
+}
+
+/* ==========================================================================
+   6. CONTROLS, BUTTONS & FOOTER
+   ========================================================================== */
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progress-text {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+}
+
+.btn {
+    font-family: var(--font-sans);
+    padding: 0.75rem 2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    outline: none;
+}
+
+.primary-btn {
+    background-color: var(--text-main);
+    color: #FFFFFF;
+    border: 1px solid var(--text-main);
+}
+
+.primary-btn:hover {
+    background-color: var(--text-muted);
+    border-color: var(--text-muted);
+}
+
+.secondary-btn {
+    background-color: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--accent-sand);
+}
+
+.secondary-btn:hover {
+    background-color: var(--accent-sand);
+}
+
+.btn.hidden {
+    display: none;
+}
+
+.app-footer {
+    background-color: var(--bg-surface);
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.footer-container p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   7. RESPONSIVE DESIGN & ANIMATIONS
+   ========================================================================== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+    .app-header {
+        padding: 2rem 1rem 1rem 1rem;
+    }
+    
+    .header-container h1 {
+        font-size: 1.8rem;
+    }
+
+    .app-content {
+        padding: 2rem 1rem;
+    }
+
+    .quiz-container {
+        padding: 2rem 1.25rem;
+    }
+
+    .quiz-options-grid {
+        grid-template-columns: 1fr; /* Stack options vertically on mobile */
+    }
+
+    .script-text {
+        font-size: 2.75rem;
+    }
+}
