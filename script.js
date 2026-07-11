@@ -7,16 +7,7 @@
 // ==========================================================================
 // 1. APPLICATION DATA (Nepali Vocabulary Array)
 // ==========================================================================
-const vocabularyData = [
-    { script: "नमस्ते", roman: "Namaste", english: "Hello / Greetings" },
-    { script: "धन्यवाद", roman: "Dhanyabaad", english: "Thank you" },
-    { script: "सञ्चै हुनुहुन्छ?", roman: "Sanchai hunuchha?", english: "How are you?" },
-    { script: "मलाई माफ गर्नुहोस्", roman: "Malai maaf garnuhos", english: "I am sorry" },
-    { script: "फेरि भेटौँला", roman: "Pheri bhetaula", english: "See you again" },
-    { script: "हजुर", roman: "Hajur", english: "Yes (polite) / Excuse me" },
-    { script: "मलाई भोक लाग्यो", roman: "Malai bhok laagyo", english: "I am hungry" },
-    { script: "यसको मूल्य कति हो?", roman: "Yasako mulya kati ho?", english: "How much does this cost?" }
-];
+const vocabulary = window.vocabularyList;
 
 // ==========================================================================
 // 2. STATE MANAGEMENT
