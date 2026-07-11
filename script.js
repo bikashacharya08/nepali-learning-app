@@ -1,13 +1,15 @@
 /**
  * Sajilo Nepali - Learning Application Script
- * Core Functionality: View switching, dynamic flashcard flipping, 
- * and automated 4-option multiple choice quiz generation.
+ * Integrated version for 100 vocabulary words database.
  */
 
 // ==========================================================================
-// 1. APPLICATION DATA (Nepali Vocabulary Array)
+// 1. APPLICATION DATA LINKING
 // ==========================================================================
-const vocabulary = window.vocabularyList;
+// Fallback array protects app execution context if file load latency occurs
+const vocabularyData = window.vocabularyList || [
+    { nepali: "Namaste", english: "Hello / Greetings", category: "Essentials & Greetings" }
+];
 
 // ==========================================================================
 // 2. STATE MANAGEMENT
@@ -20,13 +22,11 @@ let hasAnsweredQuiz = false;
 // ==========================================================================
 // 3. DOM ELEMENT SELECTORS
 // ==========================================================================
-// Navigation elements
 const navFlashcards = document.getElementById('nav-flashcards');
 const navQuiz = document.getElementById('nav-quiz');
 const flashcardsSection = document.getElementById('flashcards-section');
 const quizSection = document.getElementById('quiz-section');
 
-// Flashcard elements
 const flashcardElement = document.getElementById('flashcard');
 const cardNepaliScript = document.getElementById('card-nepali-script');
 const cardNepaliRoman = document.getElementById('card-nepali-roman');
@@ -35,7 +35,6 @@ const cardProgress = document.getElementById('card-progress');
 const prevCardBtn = document.getElementById('prev-card-btn');
 const nextCardBtn = document.getElementById('next-card-btn');
 
-// Quiz elements
 const quizNepaliScript = document.getElementById('quiz-nepali-script');
 const quizNepaliRoman = document.getElementById('quiz-nepali-roman');
 const quizOptionsGrid = document.getElementById('quiz-options');
@@ -49,13 +48,11 @@ const nextQuizBtn = document.getElementById('next-quiz-btn');
 // ==========================================================================
 function switchView(targetSection) {
     if (targetSection === 'flashcards') {
-        // Toggle Active State Nav UI
         navFlashcards.classList.add('active');
         navFlashcards.setAttribute('aria-selected', 'true');
         navQuiz.classList.remove('active');
         navQuiz.setAttribute('aria-selected', 'false');
         
-        // Dynamic Section Visibility Swap
         flashcardsSection.classList.remove('hidden');
         flashcardsSection.setAttribute('aria-hidden', 'false');
         quizSection.classList.add('hidden');
@@ -77,7 +74,6 @@ function switchView(targetSection) {
     }
 }
 
-// Attach View Triggers
 navFlashcards.addEventListener('click', () => switchView('flashcards'));
 navQuiz.addEventListener('click', () => switchView('quiz'));
 
@@ -85,24 +81,22 @@ navQuiz.addEventListener('click', () => switchView('quiz'));
 // 5. FLASHCARDS FUNCTIONALITY
 // ==========================================================================
 function updateFlashcardUI() {
-    // Reset structural flip transforms prior to content mutations
     flashcardElement.classList.remove('flipped');
     
     const currentItem = vocabularyData[currentCardIndex];
-    cardNepaliScript.textContent = currentItem.script;
-    cardNepaliRoman.textContent = currentItem.roman;
+    
+    // Aligned to display flags/indicators where script tags are present
+    if (cardNepaliScript) cardNepaliScript.textContent = "🇳🇵";
+    cardNepaliRoman.textContent = currentItem.nepali; 
     cardEnglish.textContent = currentItem.english;
     
-    // Update structural index text
     cardProgress.textContent = `${currentCardIndex + 1} / ${vocabularyData.length}`;
 }
 
-// Flashcard interaction events
 flashcardElement.addEventListener('click', () => {
     flashcardElement.classList.toggle('flipped');
 });
 
-// A11y keyboard interactions (Space/Enter tracking to execute flip action)
 flashcardElement.addEventListener('keydown', (e) => {
     if (e.key === ' ' || e.key === 'Enter') {
         e.preventDefault();
@@ -111,13 +105,11 @@ flashcardElement.addEventListener('keydown', (e) => {
 });
 
 prevCardBtn.addEventListener('click', () => {
-    // Cycle backwards safely
     currentCardIndex = (currentCardIndex - 1 + vocabularyData.length) % vocabularyData.length;
     updateFlashcardUI();
 });
 
 nextCardBtn.addEventListener('click', () => {
-    // Cycle forward safely
     currentCardIndex = (currentCardIndex + 1) % vocabularyData.length;
     updateFlashcardUI();
 });
@@ -137,27 +129,22 @@ function setupQuizQuestion() {
     quizFeedback.classList.add('hidden');
     
     const currentQuestion = vocabularyData[currentQuizIndex];
-    quizNepaliScript.textContent = currentQuestion.script;
-    quizNepaliRoman.textContent = currentQuestion.roman;
+    if (quizNepaliScript) quizNepaliScript.textContent = "❓";
+    quizNepaliRoman.textContent = currentQuestion.nepali; 
     
-    // Build options list array containing correct answer
     let options = [currentQuestion.english];
     
-    // Extract alternative definitions as wrong answer options (distractors)
     const distractors = vocabularyData
         .filter(item => item.english !== currentQuestion.english)
         .map(item => item.english);
     
-    // Shuffle distractors and grab exactly 3
     shuffleArray(distractors);
     for (let i = 0; i < 3; i++) {
         if (distractors[i]) options.push(distractors[i]);
     }
     
-    // Randomize composite option matrix arrays
     shuffleArray(options);
     
-    // Render button nodes onto DOM framework
     quizOptionsGrid.innerHTML = '';
     options.forEach(optionText => {
         const button = document.createElement('button');
@@ -171,7 +158,7 @@ function setupQuizQuestion() {
 }
 
 function handleAnswerSelection(selectedButton, chosenText, correctText) {
-    if (hasAnsweredQuiz) return; // Block double entry executions
+    if (hasAnsweredQuiz) return;
     hasAnsweredQuiz = true;
     
     const allOptionButtons = quizOptionsGrid.querySelectorAll('.option-btn');
@@ -182,7 +169,6 @@ function handleAnswerSelection(selectedButton, chosenText, correctText) {
         showFeedback(true, "Correct choice!");
     } else {
         selectedButton.classList.add('incorrect');
-        // Find and visually expose correct element path to user
         allOptionButtons.forEach(btn => {
             if (btn.textContent === correctText) btn.classList.add('correct');
         });
@@ -208,9 +194,8 @@ nextQuizBtn.addEventListener('click', () => {
     if (currentQuizIndex < vocabularyData.length) {
         setupQuizQuestion();
     } else {
-        // Quiz Final Termination Boundary Reached
         quizOptionsGrid.innerHTML = '';
-        quizNepaliScript.textContent = " 🎉";
+        if (quizNepaliScript) quizNepaliScript.textContent = " 🎉";
         quizNepaliRoman.textContent = "Quiz Completed";
         quizFeedback.classList.remove('hidden');
         feedbackText.textContent = `Final Score: ${quizScore} out of ${vocabularyData.length}!`;
@@ -220,12 +205,6 @@ nextQuizBtn.addEventListener('click', () => {
     }
 });
 
-// ==========================================================================
-// 7. UTILITY HELPERS
-// ==========================================================================
-/**
- * Fisher-Yates shuffle engine to randomly distribute arrays in place
- */
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -233,7 +212,6 @@ function shuffleArray(array) {
     }
 }
 
-// Initialize Application Frame on Content Mount
 document.addEventListener('DOMContentLoaded', () => {
     updateFlashcardUI();
 });

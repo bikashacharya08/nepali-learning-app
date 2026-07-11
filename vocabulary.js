@@ -1,12 +1,9 @@
 /**
  * Sajilo Nepali - 100 Core Vocabulary & Phrases Database
- * Categorized explicitly for English speakers, travelers, and trekkers.
  */
 
 const vocabularyList = [
-    // ==========================================================================
-    // 1. Essentials & Greetings (20 Items)
-    // ==========================================================================
+    // Essentials & Greetings
     { nepali: "Namaste", english: "Hello / Greetings", category: "Essentials & Greetings" },
     { nepali: "Dhanyabaad", english: "Thank you", category: "Essentials & Greetings" },
     { nepali: "Sanchai hunuchha?", english: "How are you?", category: "Essentials & Greetings" },
@@ -28,9 +25,7 @@ const vocabularyList = [
     { nepali: "Subha raatri", english: "Good night", category: "Essentials & Greetings" },
     { nepali: "Ghar kahaa ho?", english: "Where is your home?", category: "Essentials & Greetings" },
 
-    // ==========================================================================
-    // 2. Trekking & Directions (20 Items)
-    // ==========================================================================
+    // Trekking & Directions
     { nepali: "Bato kahaa chha?", english: "Where is the trail/way?", category: "Trekking & Directions" },
     { nepali: "Yo bato kahaa jaanchha?", english: "Where does this trail go?", category: "Trekking & Directions" },
     { nepali: "Ukalo", english: "Uphill", category: "Trekking & Directions" },
@@ -52,9 +47,7 @@ const vocabularyList = [
     { nepali: "Phedi", english: "Base of the mountain", category: "Trekking & Directions" },
     { nepali: "Bhanjyang", english: "Mountain Pass", category: "Trekking & Directions" },
 
-    // ==========================================================================
-    // 3. Dining & Food (20 Items)
-    // ==========================================================================
+    // Dining & Food
     { nepali: "Khaanaa khane thau kahaa chha?", english: "Where is a place to eat?", category: "Dining & Food" },
     { nepali: "Malaai bhok laagyo", english: "I am hungry", category: "Dining & Food" },
     { nepali: "Malaai tirkha laagyo", english: "I am thirsty", category: "Dining & Food" },
@@ -76,9 +69,7 @@ const vocabularyList = [
     { nepali: "Dahi", english: "Yogurt / Curd", category: "Dining & Food" },
     { nepali: "Bihanikhaanaa", english: "Breakfast", category: "Dining & Food" },
 
-    // ==========================================================================
-    // 4. Shopping & Numbers (20 Items)
-    // ==========================================================================
+    // Shopping & Numbers
     { nepali: "Yasako kati ho?", english: "How much is this?", category: "Shopping & Numbers" },
     { nepali: "Dherai mahango bhayo", english: "It became too expensive", category: "Shopping & Numbers" },
     { nepali: "Alikati milauhos na", english: "Please discount it a little bit", category: "Shopping & Numbers" },
@@ -100,15 +91,13 @@ const vocabularyList = [
     { nepali: "Pasal", english: "Shop / Store", category: "Shopping & Numbers" },
     { nepali: "Khulla paisa chha?", english: "Do you have small change?", category: "Shopping & Numbers" },
 
-    // ==========================================================================
-    // 5. Emergency & Safety (20 Items)
-    // ==========================================================================
+    // Emergency & Safety
     { nepali: "Guhaar!", english: "Help!", category: "Emergency & Safety" },
     { nepali: "Malaai sahayog chahiyo", english: "I need help", category: "Emergency & Safety" },
     { nepali: "Ma birami chhu", english: "I am sick", category: "Emergency & Safety" },
     { nepali: "Aspatal kahaa chha?", english: "Where is the hospital?", category: "Emergency & Safety" },
     { nepali: "Doctor bolaunuhos", english: "Please call a doctor", category: "Emergency & Safety" },
-    { nepali: "Mero टाउको (tauko) dukhirachha", english: "My head is hurting", category: "Emergency & Safety" },
+    { nepali: "Mero tauko dukhirachha", english: "My head is hurting", category: "Emergency & Safety" },
     { nepali: "Mero pet dukhyo", english: "My stomach hurts", category: "Emergency & Safety" },
     { nepali: "Malaai ringataa laagyo", english: "I feel dizzy", category: "Emergency & Safety" },
     { nepali: "Aushadhi pasal kahaa chha?", english: "Where is the pharmacy?", category: "Emergency & Safety" },
@@ -116,14 +105,13 @@ const vocabularyList = [
     { nepali: "Prahari chauki kahaa chha?", english: "Where is the police station?", category: "Emergency & Safety" },
     { nepali: "Mero saamaan harayo", english: "My luggage/belongings are lost", category: "Emergency & Safety" },
     { nepali: "Ma haraye", english: "I am lost", category: "Emergency & Safety" },
-    { nepali: "Yo सुरक्षित (surakshit) chha?", english: "Is this safe?", category: "Emergency & Safety" },
+    { nepali: "Yo surakshit chha?", english: "Is this safe?", category: "Emergency & Safety" },
     { nepali: "Teta najanus", english: "Don't go there", category: "Emergency & Safety" },
     { nepali: "Chitto garnuhos", english: "Hurry up / Do it quickly", category: "Emergency & Safety" },
     { nepali: "Malaai aushadhi chahiyo", english: "I need medicine", category: "Emergency & Safety" },
     { nepali: "Ma lade", english: "I fell down", category: "Emergency & Safety" },
     { nepali: "Sahayogako laagi dhanyabaad", english: "Thank you for the help", category: "Emergency & Safety" },
-    { nepali: "Prahari bolauhos", english: "Call the police", category: "Emergency & Safety" }
+    { nepali: "Prahari bolauhos", english: "Call the police" }
 ];
 
-// Attach globally to window object for access across decoupled script modules
 window.vocabularyList = vocabularyList;
