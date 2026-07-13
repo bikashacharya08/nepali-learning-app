@@ -360,14 +360,24 @@ body {
     z-index: -1;
 }
 
-.option-btn:hover {
-    border-color: var(--glass-border-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+.alphabet-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    border-color: rgba(255, 0, 51, 0.3);
+    box-shadow: 0 5px 15px rgba(255, 0, 51, 0.1);
+}
+
+.alphabet-card:active {
+    transform: scale(0.95);
 }
 
 .option-btn:hover::after {
     opacity: 0.1;
+}
+
+.option-btn:hover {
+    border-color: var(--glass-border-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Quiz Answer States */
@@ -537,6 +547,16 @@ body {
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
+}
+
+.alphabet-card {
+    background: var(--bg-surface);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .basics-card {

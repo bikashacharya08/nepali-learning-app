@@ -58,6 +58,22 @@ function initApp() {
     if(resetProgressBtn) {
         resetProgressBtn.addEventListener('click', resetMastery);
     }
+    
+    // Add audio pronunciation to Basics tab alphabets
+    document.querySelectorAll('.alphabet-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const nepaliChar = card.querySelector('.nepali-char').textContent;
+            
+            // Cancel any ongoing speech
+            window.speechSynthesis.cancel();
+            
+            let msg = new SpeechSynthesisUtterance();
+            msg.text = nepaliChar;
+            msg.lang = 'hi-IN'; // Hindi TTS reads Devanagari perfectly and has 99% device support
+            msg.rate = 0.8;
+            window.speechSynthesis.speak(msg);
+        });
+    });
 }
 
 function filterActiveVocabulary() {
