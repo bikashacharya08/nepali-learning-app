@@ -430,45 +430,31 @@ body {
 @media (max-width: 600px) {
     .header-container h1 { font-size: 2.2rem; }
     
-    /* Premium Mobile Bottom Navigation */
     .app-nav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        padding: 0;
-        z-index: 1000;
-        background: #121212;
-        border-top: 1px solid var(--glass-border);
+        padding-bottom: 1.5rem;
     }
     
     .app-nav ul {
-        margin: 0;
-        padding: 0.5rem;
-        border-radius: 0;
-        border: none;
-        background: transparent;
-        justify-content: space-around;
-        gap: 0.25rem;
-        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
         width: 100%;
     }
     
     .nav-btn {
-        padding: 0.8rem 0.2rem;
+        padding: 0.75rem 1rem;
         font-size: 0.9rem;
-        flex: 1;
+        flex: 1 1 calc(33.333% - 1rem); /* 3 buttons evenly spaced */
         text-align: center;
-        border-radius: var(--radius-sm);
+        min-width: 100px;
     }
     
-    /* Ensure content is not hidden behind the bottom nav */
     .app-content { 
-        padding: 1.5rem 1rem 6rem 1rem; 
+        padding: 1rem 1rem 2rem 1rem; 
     }
     
     .app-footer {
-        padding-bottom: 6rem;
+        padding-bottom: 2rem;
     }
     
     /* Full width buttons for easy tapping */
