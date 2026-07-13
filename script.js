@@ -59,6 +59,9 @@ function initApp() {
         resetProgressBtn.addEventListener('click', resetMastery);
     }
     
+    // Pre-load voices for mobile Safari/Chrome
+    window.speechSynthesis.getVoices();
+    
     // Add audio pronunciation to Basics tab alphabets
     document.querySelectorAll('.alphabet-card').forEach(card => {
         card.addEventListener('click', () => {
@@ -67,11 +70,23 @@ function initApp() {
             // Cancel any ongoing speech
             window.speechSynthesis.cancel();
             
-            let msg = new SpeechSynthesisUtterance();
-            msg.text = nepaliChar;
-            msg.lang = 'hi-IN'; // Hindi TTS reads Devanagari perfectly and has 99% device support
+            let msg = new SpeechSynthesisUtterance(nepaliChar);
+            
+            // Try to find a Hindi or Nepali voice natively installed on the phone
+            let voices = window.speechSynthesis.getVoices();
+            let preferredVoice = voices.find(v => v.lang.includes('hi') || v.lang.includes('ne'));
+            if (preferredVoice) {
+                msg.voice = preferredVoice;
+            } else {
+                msg.lang = 'hi-IN'; // Fallback
+            }
+            
             msg.rate = 0.8;
-            window.speechSynthesis.speak(msg);
+            
+            // Small timeout helps iOS Safari register the user gesture properly
+            setTimeout(() => {
+                window.speechSynthesis.speak(msg);
+            }, 50);
         });
     });
 }
