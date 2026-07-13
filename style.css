@@ -1,23 +1,32 @@
 /* ==========================================================================
-   1. VARIABLES & BASE SETUP (Quiet Luxury Palette)
+   1. VARIABLES & BASE SETUP (Premium Dark Mode with Glassmorphism)
    ========================================================================== */
 :root {
     /* Color Palette */
-    --bg-primary: #FAF9F6;      /* Soft Alabaster / Off-white */
-    --bg-surface: #FFFFFF;      /* Pure White for cards/containers */
-    --text-main: #2C3539;       /* Deep Slate Gray */
-    --text-muted: #65737E;      /* Muted Pebble Gray */
-    --accent-sand: #E6DFD3;     /* Warm Sand Accent */
-    --accent-sand-dark: #D4C9B7;/* Hover Sand */
-    --success-green: #4A5D4E;   /* Muted Forest Green */
-    --error-rose: #A37A7A;      /* Earthy Rose/Terracotta for errors */
+    --bg-primary: #0A0F1C;      /* Deep Space Dark */
+    --bg-surface: rgba(255, 255, 255, 0.03); /* Glass Base */
+    --text-main: #FFFFFF;       /* Pure White Text */
+    --text-muted: #94A3B8;      /* Slate Muted Text */
+    
+    /* Gradients & Accents */
+    --gradient-primary: linear-gradient(135deg, #6366F1, #A855F7, #EC4899);
+    --gradient-hover: linear-gradient(135deg, #4F46E5, #9333EA, #DB2777);
+    --accent-glow: rgba(168, 85, 247, 0.5);
+    
+    --success-green: #10B981;   /* Neon Emerald */
+    --error-rose: #F43F5E;      /* Neon Rose */
+    
+    /* Glassmorphism Borders */
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-border-hover: rgba(255, 255, 255, 0.25);
     
     /* Typography & Structure */
-    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    --radius-sm: 4px;
-    --radius-md: 8px;
+    --font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
     --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    --max-width: 760px;
+    --max-width: 800px;
 }
 
 * {
@@ -31,103 +40,144 @@ body {
     background-color: var(--bg-primary);
     color: var(--text-main);
     line-height: 1.6;
-    letter-spacing: -0.01em;
+    letter-spacing: 0.01em;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     -webkit-font-smoothing: antialiased;
+    position: relative;
+    overflow-x: hidden;
 }
 
 /* ==========================================================================
-   2. HEADER & NAVIGATION
+   2. BACKGROUND DECORATIVE ORBS
+   ========================================================================== */
+.bg-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: -1;
+    opacity: 0.4;
+    animation: float 10s ease-in-out infinite alternate;
+}
+
+.orb-1 {
+    width: 400px;
+    height: 400px;
+    background: #6366F1;
+    top: -100px;
+    left: -150px;
+}
+
+.orb-2 {
+    width: 300px;
+    height: 300px;
+    background: #EC4899;
+    top: 40%;
+    right: -100px;
+    animation-delay: -3s;
+}
+
+.orb-3 {
+    width: 350px;
+    height: 350px;
+    background: #A855F7;
+    bottom: -100px;
+    left: 20%;
+    animation-delay: -6s;
+}
+
+@keyframes float {
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(30px) scale(1.1); }
+}
+
+/* ==========================================================================
+   3. HEADER & NAVIGATION
    ========================================================================== */
 .app-header {
-    background-color: var(--bg-surface);
     padding: 3rem 1.5rem 1.5rem 1.5rem;
     text-align: center;
+    position: relative;
+    z-index: 10;
 }
 
 .header-container h1 {
-    font-weight: 400;
-    font-size: 2.25rem;
-    letter-spacing: -0.03em;
+    font-weight: 700;
+    font-size: 2.75rem;
+    letter-spacing: -0.02em;
     margin-bottom: 0.5rem;
-    color: var(--text-main);
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
 }
 
 .tagline {
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     color: var(--text-muted);
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .app-nav {
-    background-color: var(--bg-surface);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
     display: flex;
     justify-content: center;
-    padding-bottom: 1rem;
+    padding-bottom: 2rem;
+    z-index: 10;
+    position: relative;
 }
 
 .app-nav ul {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: 1.5rem;
+    background: var(--bg-surface);
+    backdrop-filter: blur(12px);
+    padding: 0.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--glass-border);
 }
 
 .nav-btn {
     background: none;
     border: none;
     font-family: var(--font-sans);
-    font-size: 0.9rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
     color: var(--text-muted);
-    padding: 0.5rem 0;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
     cursor: pointer;
-    position: relative;
     transition: var(--transition-smooth);
 }
 
 .nav-btn:hover {
     color: var(--text-main);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .nav-btn.active {
     color: var(--text-main);
-}
-
-/* Elegant minimalist underline indicator */
-.nav-btn::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: var(--text-main);
-    transform: scaleX(0);
-    transition: var(--transition-smooth);
-}
-
-.nav-btn.active::after {
-    transform: scaleX(1);
+    background: var(--gradient-primary);
+    box-shadow: 0 4px 15px var(--accent-glow);
 }
 
 /* ==========================================================================
-   3. LAYOUT & CORE SECTIONS
+   4. LAYOUT & CORE SECTIONS
    ========================================================================== */
 .app-content {
     flex: 1;
     max-width: var(--max-width);
     width: 100%;
     margin: 0 auto;
-    padding: 4rem 1.5rem;
+    padding: 2rem 1.5rem;
+    z-index: 10;
+    position: relative;
 }
 
 .content-section {
-    animation: fadeIn 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    animation: slideUp 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .content-section.hidden {
@@ -135,34 +185,35 @@ body {
 }
 
 .section-title {
-    font-weight: 400;
-    font-size: 1.5rem;
+    font-weight: 600;
+    font-size: 1.75rem;
     margin-bottom: 0.5rem;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
 }
 
 .section-desc {
     color: var(--text-muted);
-    font-size: 0.95rem;
-    margin-bottom: 3rem;
-    font-weight: 300;
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+    font-weight: 400;
 }
 
 /* ==========================================================================
-   4. COMPONENT: FLASHCARDS (3D Flip Effect)
+   5. COMPONENT: FLASHCARDS (Premium 3D Glass Flip Effect)
    ========================================================================== */
 .flashcard-container {
-    perspective: 1000px;
+    perspective: 1500px;
     margin-bottom: 3rem;
 }
 
 .flashcard {
     width: 100%;
-    height: 320px;
+    height: 380px;
     cursor: pointer;
     background: transparent;
     border: none;
     outline: none;
+    position: relative;
 }
 
 .flashcard-inner {
@@ -170,11 +221,10 @@ body {
     width: 100%;
     height: 100%;
     text-align: center;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     transform-style: preserve-3d;
 }
 
-/* Dynamic JS toggle class */
 .flashcard.flipped .flashcard-inner {
     transform: rotateY(180deg);
 }
@@ -185,103 +235,153 @@ body {
     height: 100%;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    background-color: var(--bg-surface);
-    border-radius: var(--radius-md);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-    border: 1px solid rgba(0, 0, 0, 0.03);
+    
+    background: var(--bg-surface);
+    backdrop-filter: blur(20px);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
+    padding: 2.5rem;
+}
+
+.flashcard-front::before, .flashcard-back::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-lg);
+    padding: 2px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
 }
 
 .flashcard-back {
     transform: rotateY(180deg);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(236, 72, 153, 0.05));
+    backdrop-filter: blur(20px);
+}
+
+/* Hover effects */
+.flashcard:hover .flashcard-inner {
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.2);
 }
 
 /* Typography Inside Components */
 .script-text {
-    font-size: 3.5rem;
-    font-weight: 400;
+    font-size: 4rem;
+    font-weight: 600;
     margin-bottom: 0.75rem;
     color: var(--text-main);
+    text-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
 }
 
 .romanized-text {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     color: var(--text-muted);
-    font-weight: 300;
-    letter-spacing: 0.02em;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
 }
 
 .english-text {
-    font-size: 1.5rem;
-    font-weight: 400;
+    font-size: 1.75rem;
+    font-weight: 500;
     color: var(--text-main);
-    max-width: 80%;
+    max-width: 90%;
+    line-height: 1.4;
 }
 
 /* ==========================================================================
-   5. COMPONENT: QUIZ INTERFACE
+   6. COMPONENT: QUIZ INTERFACE
    ========================================================================== */
 .quiz-container {
-    background-color: var(--bg-surface);
-    border-radius: var(--radius-md);
-    padding: 3rem 2.5rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-    border: 1px solid rgba(0, 0, 0, 0.03);
+    background: var(--bg-surface);
+    backdrop-filter: blur(16px);
+    border-radius: var(--radius-lg);
+    padding: 3.5rem 2.5rem;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     margin-bottom: 3rem;
+    position: relative;
 }
 
 .quiz-question-box {
     text-align: center;
     margin-bottom: 3rem;
     padding-bottom: 2rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid var(--glass-border);
 }
 
 .quiz-options-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 1.25rem;
 }
 
 .option-btn {
-    background-color: var(--bg-primary);
-    border: 1px solid transparent;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
     color: var(--text-main);
-    padding: 1.25rem;
-    border-radius: var(--radius-sm);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
     font-family: var(--font-sans);
-    font-size: 1rem;
+    font-size: 1.05rem;
+    font-weight: 500;
     cursor: pointer;
     text-align: left;
     transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.option-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-primary);
+    opacity: 0;
+    transition: var(--transition-smooth);
+    z-index: -1;
 }
 
 .option-btn:hover {
-    background-color: var(--accent-sand);
+    border-color: var(--glass-border-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.option-btn:hover::after {
+    opacity: 0.1;
 }
 
 /* Quiz Answer States */
 .option-btn.correct {
-    background-color: var(--success-green) !important;
-    color: #FFFFFF;
+    background: rgba(16, 185, 129, 0.15) !important;
+    border-color: var(--success-green) !important;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
 }
 
 .option-btn.incorrect {
-    background-color: var(--error-rose) !important;
-    color: #FFFFFF;
+    background: rgba(244, 63, 94, 0.15) !important;
+    border-color: var(--error-rose) !important;
 }
 
 .quiz-feedback {
     margin-top: 2rem;
-    padding: 1rem;
+    padding: 1.25rem;
     border-radius: var(--radius-sm);
     text-align: center;
-    font-size: 0.95rem;
-    animation: fadeIn 0.4s ease;
+    font-size: 1.05rem;
+    font-weight: 500;
+    animation: slideUp 0.4s ease;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
 }
 
 .quiz-feedback.hidden {
@@ -289,51 +389,57 @@ body {
 }
 
 /* ==========================================================================
-   6. CONTROLS, BUTTONS & FOOTER
+   7. CONTROLS, BUTTONS & FOOTER
    ========================================================================== */
 .controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 1rem;
 }
 
 .progress-text {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.15em;
     color: var(--text-muted);
+    font-weight: 600;
 }
 
 .btn {
     font-family: var(--font-sans);
-    padding: 0.75rem 2rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    border-radius: var(--radius-sm);
+    padding: 0.85rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 50px;
     cursor: pointer;
     transition: var(--transition-smooth);
     outline: none;
 }
 
 .primary-btn {
-    background-color: var(--text-main);
+    background: var(--gradient-primary);
     color: #FFFFFF;
-    border: 1px solid var(--text-main);
+    border: none;
+    box-shadow: 0 4px 15px var(--accent-glow);
 }
 
 .primary-btn:hover {
-    background-color: var(--text-muted);
-    border-color: var(--text-muted);
+    background: var(--gradient-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--accent-glow);
 }
 
 .secondary-btn {
-    background-color: transparent;
+    background: transparent;
     color: var(--text-main);
-    border: 1px solid var(--accent-sand);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
 }
 
 .secondary-btn:hover {
-    background-color: var(--accent-sand);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--glass-border-hover);
 }
 
 .btn.hidden {
@@ -341,48 +447,45 @@ body {
 }
 
 .app-footer {
-    background-color: var(--bg-surface);
     padding: 2.5rem 1.5rem;
     text-align: center;
-    border-top: 1px solid rgba(0, 0, 0, 0.03);
+    position: relative;
+    z-index: 10;
+    border-top: 1px solid var(--glass-border);
+    margin-top: auto;
 }
 
 .footer-container p {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
-    letter-spacing: 0.02em;
+    letter-spacing: 0.03em;
 }
 
 /* ==========================================================================
-   7. RESPONSIVE DESIGN & ANIMATIONS
+   8. RESPONSIVE DESIGN & ANIMATIONS
    ========================================================================== */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 600px) {
-    .app-header {
-        padding: 2rem 1rem 1rem 1rem;
+    .header-container h1 { font-size: 2.2rem; }
+    
+    .app-nav ul {
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
     }
     
-    .header-container h1 {
-        font-size: 1.8rem;
-    }
+    .app-content { padding: 1.5rem 1rem; }
+    .flashcard-front, .flashcard-back { padding: 1.5rem; }
+    .script-text { font-size: 3.2rem; }
+    .english-text { font-size: 1.4rem; }
 
-    .app-content {
-        padding: 2rem 1rem;
-    }
-
-    .quiz-container {
-        padding: 2rem 1.25rem;
-    }
-
-    .quiz-options-grid {
-        grid-template-columns: 1fr; /* Stack options vertically on mobile */
-    }
-
-    .script-text {
-        font-size: 2.75rem;
-    }
+    .quiz-container { padding: 2rem 1.5rem; }
+    .quiz-options-grid { grid-template-columns: 1fr; }
+    
+    .controls { flex-direction: column; gap: 1.5rem; }
+    .progress-text { order: -1; }
 }
