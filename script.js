@@ -8,6 +8,7 @@
 const vocabularyData = window.vocabularyList;
 let activeVocabulary = [];
 let masteredWords = JSON.parse(localStorage.getItem('nepaliAppMastery')) || [];
+let mistakeCount = parseInt(localStorage.getItem('nepaliAppMistakes')) || 0;
 
 // ==========================================================================
 // 2. STATE MANAGEMENT
@@ -34,6 +35,7 @@ const cardGerman = document.getElementById('card-german');
 const cardEnglish = document.getElementById('card-english');
 const cardProgress = document.getElementById('card-progress');
 const masteryCounter = document.getElementById('mastery-counter');
+const mistakeCounter = document.getElementById('mistake-counter');
 const prevCardBtn = document.getElementById('prev-card-btn');
 const nextCardBtn = document.getElementById('next-card-btn');
 
@@ -77,9 +79,11 @@ function markAsMastered(nepaliWord) {
 }
 
 function resetMastery() {
-    if(confirm("Are you sure you want to reset your progress? This will clear all your mastered words.")) {
+    if(confirm("Are you sure you want to reset your progress? This will clear all your mastered words and mistake counts.")) {
         masteredWords = [];
+        mistakeCount = 0;
         localStorage.removeItem('nepaliAppMastery');
+        localStorage.removeItem('nepaliAppMistakes');
         initApp();
         resetQuizSession();
         alert("Progress reset!");
@@ -88,7 +92,10 @@ function resetMastery() {
 
 function updateMasteryCounter() {
     if (masteryCounter) {
-        masteryCounter.textContent = `Mastered: ${masteredWords.length} / ${vocabularyData.length}`;
+        masteryCounter.textContent = `Learned: ${masteredWords.length} / ${vocabularyData.length}`;
+    }
+    if (mistakeCounter) {
+        mistakeCounter.textContent = `Mistakes: ${mistakeCount}`;
     }
 }
 
@@ -246,6 +253,9 @@ function handleAnswerSelection(selectedButton, chosenText, correctText, question
         markAsMastered(questionItem.nepali);
     } else {
         selectedButton.classList.add('incorrect');
+        mistakeCount++;
+        localStorage.setItem('nepaliAppMistakes', mistakeCount.toString());
+        updateMasteryCounter();
         allOptionButtons.forEach(btn => {
             if (btn.textContent === correctText) btn.classList.add('correct');
         });
