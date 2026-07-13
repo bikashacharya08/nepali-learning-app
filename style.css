@@ -522,21 +522,71 @@ body {
 @media (max-width: 600px) {
     .header-container h1 { font-size: 2.2rem; }
     
-    .app-nav ul {
-        flex-direction: row;
+    /* Premium Mobile Bottom Navigation */
+    .app-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
         width: 100%;
-        justify-content: center;
+        padding: 0;
+        z-index: 1000;
+        background: rgba(8, 5, 16, 0.9);
+        backdrop-filter: blur(20px);
+        border-top: 1px solid var(--glass-border);
     }
     
-    .app-content { padding: 1.5rem 1rem; }
+    .app-nav ul {
+        margin: 0;
+        padding: 0.5rem;
+        border-radius: 0;
+        border: none;
+        background: transparent;
+        justify-content: space-around;
+        gap: 0.25rem;
+        flex-direction: row;
+        width: 100%;
+    }
+    
+    .nav-btn {
+        padding: 0.8rem 0.2rem;
+        font-size: 0.9rem;
+        flex: 1;
+        text-align: center;
+        border-radius: var(--radius-sm);
+    }
+    
+    /* Ensure content is not hidden behind the bottom nav */
+    .app-content { 
+        padding: 1.5rem 1rem 6rem 1rem; 
+    }
+    
+    .app-footer {
+        padding-bottom: 6rem;
+    }
+    
+    /* Full width buttons for easy tapping */
+    .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+        padding: 1rem;
+    }
+    
+    .controls { 
+        flex-direction: column; 
+        gap: 1rem; 
+        padding: 0;
+    }
+    
+    /* Adjust flashcards for smaller screens */
+    .flashcard { height: 320px; margin-bottom: 2rem; }
     .flashcard-front, .flashcard-back { padding: 1.5rem; }
-    .script-text { font-size: 3.2rem; }
-    .english-text { font-size: 1.4rem; }
+    .script-text { font-size: 3rem; }
+    .english-text { font-size: 1.2rem; }
+    .german-text { font-size: 1.8rem; }
 
-    .quiz-container { padding: 2rem 1.5rem; }
+    .quiz-container { padding: 1.5rem 1rem; }
     .quiz-options-grid { grid-template-columns: 1fr; }
     
-    .controls { flex-direction: column; gap: 1.5rem; }
     .progress-text { order: -1; }
 }
 
