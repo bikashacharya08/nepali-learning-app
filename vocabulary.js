@@ -20,9 +20,10 @@ const vocabularyList = [
     { nepali: "Subha raatri", english: "Good night", german: "Gute Nacht", category: "Essentials" },
     { nepali: "Thik chha", english: "It's okay / All right", german: "In Ordnung / Alles klar", category: "Essentials" },
 
-    // --- 2. ROMANCE & AFFECTION (For Mero Pyaari) ---
-    { nepali: "Ma timilai maya garchhu", english: "I love you", german: "Ich liebe dich", category: "Romance" },
-    { nepali: "Mero pyaari", english: "My darling/beloved (female)", german: "Meine Geliebte / Mein Schatz", category: "Romance" },
+    // --- 2. ROMANCE & AFFECTION (Specially for Luna) ---
+    { nepali: "Luna, ma timilai maya garchhu", english: "Luna, I love you", german: "Luna, ich liebe dich", category: "Romance" },
+    { nepali: "Mero pyaari Luna", english: "My beloved Luna", german: "Meine geliebte Luna", category: "Romance" },
+    { nepali: "Timi mero sabai thok hau", english: "You are my everything", german: "Du bist mein Alles", category: "Romance" },
     { nepali: "Mero mutu", english: "My heart", german: "Mein Herz", category: "Romance" },
     { nepali: "Timi dherai ramri chhau", english: "You are very beautiful", german: "Du bist sehr schön", category: "Romance" },
     { nepali: "Malaai timro yaad aayo", english: "I miss you", german: "Ich vermisse dich", category: "Romance" },

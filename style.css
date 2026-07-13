@@ -2,16 +2,16 @@
    1. VARIABLES & BASE SETUP (Premium Dark Mode with Glassmorphism)
    ========================================================================== */
 :root {
-    /* Color Palette */
-    --bg-primary: #0A0F1C;      /* Deep Space Dark */
-    --bg-surface: rgba(255, 255, 255, 0.03); /* Glass Base */
+    /* Color Palette - German/Nepali Romance */
+    --bg-primary: #080510;      /* Midnight Black with a hint of romantic purple */
+    --bg-surface: rgba(255, 255, 255, 0.04); /* Glass Base */
     --text-main: #FFFFFF;       /* Pure White Text */
-    --text-muted: #94A3B8;      /* Slate Muted Text */
+    --text-muted: #CBD5E1;      /* Light Slate Text */
     
-    /* Gradients & Accents */
-    --gradient-primary: linear-gradient(135deg, #6366F1, #A855F7, #EC4899);
-    --gradient-hover: linear-gradient(135deg, #4F46E5, #9333EA, #DB2777);
-    --accent-glow: rgba(168, 85, 247, 0.5);
+    /* Gradients & Accents (Crimson Red & Gold) */
+    --gradient-primary: linear-gradient(135deg, #FF0033, #FFCC00);
+    --gradient-hover: linear-gradient(135deg, #E6002E, #E6B800);
+    --accent-glow: rgba(255, 0, 51, 0.4);
     
     --success-green: #10B981;   /* Neon Emerald */
     --error-rose: #F43F5E;      /* Neon Rose */
@@ -64,7 +64,7 @@ body {
 .orb-1 {
     width: 400px;
     height: 400px;
-    background: #6366F1;
+    background: #FF0033;
     top: -100px;
     left: -150px;
 }
@@ -72,7 +72,7 @@ body {
 .orb-2 {
     width: 300px;
     height: 300px;
-    background: #EC4899;
+    background: #FFCC00;
     top: 40%;
     right: -100px;
     animation-delay: -3s;
@@ -81,7 +81,7 @@ body {
 .orb-3 {
     width: 350px;
     height: 350px;
-    background: #A855F7;
+    background: #E6002E;
     bottom: -100px;
     left: 20%;
     animation-delay: -6s;
@@ -263,13 +263,13 @@ body {
 
 .flashcard-back {
     transform: rotateY(180deg);
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(236, 72, 153, 0.05));
+    background: linear-gradient(135deg, rgba(255, 0, 51, 0.08), rgba(255, 204, 0, 0.05));
     backdrop-filter: blur(20px);
 }
 
 /* Hover effects */
 .flashcard:hover .flashcard-inner {
-    box-shadow: 0 0 30px rgba(168, 85, 247, 0.2);
+    box-shadow: 0 0 35px rgba(255, 0, 51, 0.25);
 }
 
 /* Typography Inside Components */
@@ -290,11 +290,12 @@ body {
 }
 
 .german-text {
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 700;
-    color: #A855F7;
+    color: #FFCC00;
     margin-bottom: 0.5rem;
     text-align: center;
+    text-shadow: 0 2px 10px rgba(255, 204, 0, 0.3);
 }
 
 .english-text {
@@ -620,7 +621,7 @@ body {
 }
 
 .tips-list li em {
-    color: #A855F7;
+    color: #FFCC00;
     font-style: normal;
     font-weight: 600;
 }
