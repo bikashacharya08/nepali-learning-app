@@ -5,30 +5,35 @@
 // ==========================================================================
 // 1. APPLICATION DATA LINKING
 // ==========================================================================
-// This safely grabs the 100 words from vocabulary.js
 const vocabularyData = window.vocabularyList;
+let activeVocabulary = [];
+let masteredWords = JSON.parse(localStorage.getItem('nepaliAppMastery')) || [];
 
 // ==========================================================================
 // 2. STATE MANAGEMENT
 // ==========================================================================
 let currentCardIndex = 0;
-let currentQuizIndex = 0;
+let currentQuizQuestion = null;
 let quizScore = 0;
 let hasAnsweredQuiz = false;
 
 // ==========================================================================
 // 3. DOM ELEMENT SELECTORS
 // ==========================================================================
+const navBasics = document.getElementById('nav-basics');
 const navFlashcards = document.getElementById('nav-flashcards');
 const navQuiz = document.getElementById('nav-quiz');
+const basicsSection = document.getElementById('basics-section');
 const flashcardsSection = document.getElementById('flashcards-section');
 const quizSection = document.getElementById('quiz-section');
 
 const flashcardElement = document.getElementById('flashcard');
 const cardNepaliScript = document.getElementById('card-nepali-script');
 const cardNepaliRoman = document.getElementById('card-nepali-roman');
+const cardGerman = document.getElementById('card-german');
 const cardEnglish = document.getElementById('card-english');
 const cardProgress = document.getElementById('card-progress');
+const masteryCounter = document.getElementById('mastery-counter');
 const prevCardBtn = document.getElementById('prev-card-btn');
 const nextCardBtn = document.getElementById('next-card-btn');
 
@@ -39,56 +44,113 @@ const quizFeedback = document.getElementById('quiz-feedback');
 const feedbackText = document.getElementById('feedback-text');
 const quizProgress = document.getElementById('quiz-progress');
 const nextQuizBtn = document.getElementById('next-quiz-btn');
+const resetProgressBtn = document.getElementById('reset-progress-btn');
 
 // ==========================================================================
-// 4. VIEW / TAB SWITCHING LOGIC
+// 4. INITIALIZATION & MASTERY LOGIC
+// ==========================================================================
+function initApp() {
+    filterActiveVocabulary();
+    updateMasteryCounter();
+    updateFlashcardUI();
+    if(resetProgressBtn) {
+        resetProgressBtn.addEventListener('click', resetMastery);
+    }
+}
+
+function filterActiveVocabulary() {
+    activeVocabulary = vocabularyData.filter(word => !masteredWords.includes(word.nepali));
+    // If they mastered everything, let them review everything
+    if (activeVocabulary.length === 0) {
+        activeVocabulary = [...vocabularyData];
+    }
+    shuffleArray(activeVocabulary);
+    currentCardIndex = 0;
+}
+
+function markAsMastered(nepaliWord) {
+    if (!masteredWords.includes(nepaliWord)) {
+        masteredWords.push(nepaliWord);
+        localStorage.setItem('nepaliAppMastery', JSON.stringify(masteredWords));
+        updateMasteryCounter();
+    }
+}
+
+function resetMastery() {
+    if(confirm("Are you sure you want to reset your progress? This will clear all your mastered words.")) {
+        masteredWords = [];
+        localStorage.removeItem('nepaliAppMastery');
+        initApp();
+        resetQuizSession();
+        alert("Progress reset!");
+    }
+}
+
+function updateMasteryCounter() {
+    if (masteryCounter) {
+        masteryCounter.textContent = `Mastered: ${masteredWords.length} / ${vocabularyData.length}`;
+    }
+}
+
+// ==========================================================================
+// 5. VIEW / TAB SWITCHING LOGIC
 // ==========================================================================
 function switchView(targetSection) {
-    if (targetSection === 'flashcards') {
+    // Reset all tabs
+    navBasics.classList.remove('active');
+    navBasics.setAttribute('aria-selected', 'false');
+    navFlashcards.classList.remove('active');
+    navFlashcards.setAttribute('aria-selected', 'false');
+    navQuiz.classList.remove('active');
+    navQuiz.setAttribute('aria-selected', 'false');
+    
+    basicsSection.classList.add('hidden');
+    basicsSection.setAttribute('aria-hidden', 'true');
+    flashcardsSection.classList.add('hidden');
+    flashcardsSection.setAttribute('aria-hidden', 'true');
+    quizSection.classList.add('hidden');
+    quizSection.setAttribute('aria-hidden', 'true');
+
+    if (targetSection === 'basics') {
+        navBasics.classList.add('active');
+        navBasics.setAttribute('aria-selected', 'true');
+        basicsSection.classList.remove('hidden');
+        basicsSection.setAttribute('aria-hidden', 'false');
+    } else if (targetSection === 'flashcards') {
         navFlashcards.classList.add('active');
         navFlashcards.setAttribute('aria-selected', 'true');
-        navQuiz.classList.remove('active');
-        navQuiz.setAttribute('aria-selected', 'false');
-        
         flashcardsSection.classList.remove('hidden');
         flashcardsSection.setAttribute('aria-hidden', 'false');
-        quizSection.classList.add('hidden');
-        quizSection.setAttribute('aria-hidden', 'true');
-        
+        filterActiveVocabulary();
         updateFlashcardUI();
     } else if (targetSection === 'quiz') {
         navQuiz.classList.add('active');
         navQuiz.setAttribute('aria-selected', 'true');
-        navFlashcards.classList.remove('active');
-        navFlashcards.setAttribute('aria-selected', 'false');
-        
         quizSection.classList.remove('hidden');
         quizSection.setAttribute('aria-hidden', 'false');
-        flashcardsSection.classList.add('hidden');
-        flashcardsSection.setAttribute('aria-hidden', 'true');
-        
         resetQuizSession();
     }
 }
 
+navBasics.addEventListener('click', () => switchView('basics'));
 navFlashcards.addEventListener('click', () => switchView('flashcards'));
 navQuiz.addEventListener('click', () => switchView('quiz'));
 
 // ==========================================================================
-// 5. FLASHCARDS FUNCTIONALITY
+// 6. FLASHCARDS FUNCTIONALITY
 // ==========================================================================
 function updateFlashcardUI() {
-    if (!vocabularyData || vocabularyData.length === 0) return;
+    if (!activeVocabulary || activeVocabulary.length === 0) return;
     
     flashcardElement.classList.remove('flipped');
-    const currentItem = vocabularyData[currentCardIndex];
+    const currentItem = activeVocabulary[currentCardIndex];
     
-    // Put the Romanized word where the big text goes, and the category below it
     if (cardNepaliScript) cardNepaliScript.textContent = currentItem.nepali; 
     if (cardNepaliRoman) cardNepaliRoman.textContent = `Category: ${currentItem.category}`; 
-    if (cardEnglish) cardEnglish.textContent = currentItem.english;
+    if (cardGerman) cardGerman.textContent = currentItem.german || currentItem.english;
+    if (cardEnglish) cardEnglish.textContent = `(${currentItem.english})`;
     
-    if (cardProgress) cardProgress.textContent = `${currentCardIndex + 1} / ${vocabularyData.length}`;
+    if (cardProgress) cardProgress.textContent = `${currentCardIndex + 1} / ${activeVocabulary.length}`;
 }
 
 flashcardElement.addEventListener('click', () => {
@@ -103,40 +165,54 @@ flashcardElement.addEventListener('keydown', (e) => {
 });
 
 prevCardBtn.addEventListener('click', () => {
-    currentCardIndex = (currentCardIndex - 1 + vocabularyData.length) % vocabularyData.length;
+    currentCardIndex = (currentCardIndex - 1 + activeVocabulary.length) % activeVocabulary.length;
     updateFlashcardUI();
 });
 
 nextCardBtn.addEventListener('click', () => {
-    currentCardIndex = (currentCardIndex + 1) % vocabularyData.length;
+    currentCardIndex = (currentCardIndex + 1) % activeVocabulary.length;
     updateFlashcardUI();
 });
 
 // ==========================================================================
-// 6. QUIZ LOGIC MATRIX
+// 7. QUIZ LOGIC MATRIX
 // ==========================================================================
 function resetQuizSession() {
-    currentQuizIndex = 0;
+    filterActiveVocabulary();
     quizScore = 0;
     setupQuizQuestion();
 }
 
 function setupQuizQuestion() {
-    if (!vocabularyData || vocabularyData.length === 0) return;
+    if (!activeVocabulary || activeVocabulary.length === 0) {
+        quizOptionsGrid.innerHTML = '';
+        if (quizNepaliScript) quizNepaliScript.textContent = "🎉";
+        quizNepaliRoman.textContent = "You mastered everything!";
+        quizFeedback.classList.remove('hidden');
+        feedbackText.textContent = `Amazing job! You have mastered all words. Reset progress to play again.`;
+        quizFeedback.style.borderLeft = "4px solid var(--text-main)";
+        nextQuizBtn.classList.add('hidden');
+        quizProgress.textContent = "100% Mastered";
+        return;
+    }
 
     hasAnsweredQuiz = false;
     nextQuizBtn.classList.add('hidden');
     quizFeedback.classList.add('hidden');
     
-    const currentQuestion = vocabularyData[currentQuizIndex];
-    if (quizNepaliScript) quizNepaliScript.textContent = currentQuestion.nepali;
-    if (quizNepaliRoman) quizNepaliRoman.textContent = `Category: ${currentQuestion.category}`; 
+    // Pick a random question from active pool
+    currentQuizQuestion = activeVocabulary[Math.floor(Math.random() * activeVocabulary.length)];
     
-    let options = [currentQuestion.english];
+    if (quizNepaliScript) quizNepaliScript.textContent = currentQuizQuestion.nepali;
+    if (quizNepaliRoman) quizNepaliRoman.textContent = `Category: ${currentQuizQuestion.category}`; 
+    
+    // Use German for options if available, else English
+    const correctTargetText = currentQuizQuestion.german || currentQuizQuestion.english;
+    let options = [correctTargetText];
     
     const distractors = vocabularyData
-        .filter(item => item.english !== currentQuestion.english)
-        .map(item => item.english);
+        .filter(item => (item.german || item.english) !== correctTargetText)
+        .map(item => item.german || item.english);
     
     shuffleArray(distractors);
     for (let i = 0; i < 3; i++) {
@@ -150,14 +226,14 @@ function setupQuizQuestion() {
         const button = document.createElement('button');
         button.className = 'option-btn';
         button.textContent = optionText;
-        button.addEventListener('click', () => handleAnswerSelection(button, optionText, currentQuestion.english));
+        button.addEventListener('click', () => handleAnswerSelection(button, optionText, correctTargetText, currentQuizQuestion));
         quizOptionsGrid.appendChild(button);
     });
     
-    quizProgress.textContent = `Question ${currentQuizIndex + 1} of ${vocabularyData.length}`;
+    quizProgress.textContent = `Words left to master: ${activeVocabulary.length}`;
 }
 
-function handleAnswerSelection(selectedButton, chosenText, correctText) {
+function handleAnswerSelection(selectedButton, chosenText, correctText, questionItem) {
     if (hasAnsweredQuiz) return;
     hasAnsweredQuiz = true;
     
@@ -166,13 +242,14 @@ function handleAnswerSelection(selectedButton, chosenText, correctText) {
     if (chosenText === correctText) {
         selectedButton.classList.add('correct');
         quizScore++;
-        showFeedback(true, "Correct choice!");
+        showFeedback(true, `Richtig! (Correct!) You've mastered this word.`);
+        markAsMastered(questionItem.nepali);
     } else {
         selectedButton.classList.add('incorrect');
         allOptionButtons.forEach(btn => {
             if (btn.textContent === correctText) btn.classList.add('correct');
         });
-        showFeedback(false, `Incorrect. Correct answer was: "${correctText}"`);
+        showFeedback(false, `Falsch (Incorrect). Correct answer was: "${correctText}"`);
     }
     
     nextQuizBtn.classList.remove('hidden');
@@ -190,19 +267,9 @@ function showFeedback(isSuccess, message) {
 }
 
 nextQuizBtn.addEventListener('click', () => {
-    currentQuizIndex++;
-    if (currentQuizIndex < vocabularyData.length) {
-        setupQuizQuestion();
-    } else {
-        quizOptionsGrid.innerHTML = '';
-        if (quizNepaliScript) quizNepaliScript.textContent = " 🎉";
-        quizNepaliRoman.textContent = "Quiz Completed";
-        quizFeedback.classList.remove('hidden');
-        feedbackText.textContent = `Final Score: ${quizScore} out of ${vocabularyData.length}!`;
-        quizFeedback.style.borderLeft = "4px solid var(--text-main)";
-        nextQuizBtn.classList.add('hidden');
-        quizProgress.textContent = "Session Complete";
-    }
+    // Re-filter so the mastered word is removed from the active pool
+    filterActiveVocabulary();
+    setupQuizQuestion();
 });
 
 function shuffleArray(array) {
@@ -214,5 +281,5 @@ function shuffleArray(array) {
 
 // Start the app smoothly once everything loads
 document.addEventListener('DOMContentLoaded', () => {
-    updateFlashcardUI();
+    initApp();
 });
